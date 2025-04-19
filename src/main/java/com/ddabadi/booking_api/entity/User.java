@@ -1,5 +1,6 @@
 package com.ddabadi.booking_api.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import jakarta.persistence.Id;
@@ -22,6 +23,8 @@ public class User implements UserDetails {
     private Long id;
 
     private String username;
+
+    @JsonIgnore
     private String password;
 
     @Enumerated(EnumType.STRING)
