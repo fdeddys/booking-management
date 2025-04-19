@@ -1,6 +1,8 @@
 package com.ddabadi.booking_api.service;
 
 import com.ddabadi.booking_api.dto.AuthRequest;
+import com.ddabadi.booking_api.dto.LoginResponseDTO;
+import com.ddabadi.booking_api.dto.LoginResponseUserDTO;
 import com.ddabadi.booking_api.dto.RegisterRequest;
 import com.ddabadi.booking_api.entity.Role;
 import com.ddabadi.booking_api.entity.User;
@@ -38,7 +40,7 @@ public class AuthService  {
         return jwtService.generateToken(user);
     }
 
-    public String authenticate(AuthRequest request) {
+    public LoginResponseDTO authenticate(AuthRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
@@ -51,8 +53,18 @@ public class AuthService  {
 //                userRepository.findByUsername(request.getUsername())
 //                .orElseThrow();
 
+        LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
+        loginResponseDTO.setServiceToken(jwtService.generateToken(user));
+        LoginResponseUserDTO userDto = new LoginResponseUserDTO();
+        userDto.setId(request.getUsername());
+        userDto.setName(request.getUsername());
+        userDto.setRole("Admin");
+        userDto.setLastName("");
+        userDto.setFirstName("");
+        userDto.setEmail("");
+        userDto.setPassword("");
 
-
-        return jwtService.generateToken(user);
+        loginResponseDTO.setUser(userDto);
+        return loginResponseDTO;
     }
 }

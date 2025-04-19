@@ -2,6 +2,7 @@ package com.ddabadi.booking_api.controller;
 
 
 import com.ddabadi.booking_api.dto.AuthRequest;
+import com.ddabadi.booking_api.dto.LoginResponseDTO;
 import com.ddabadi.booking_api.dto.RegisterRequest;
 import com.ddabadi.booking_api.service.AuthService;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +22,8 @@ public class AuthController {
         return ResponseEntity.ok(authService.register(request));
     }
 
-//    @CrossOrigin(origins = "*")
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody AuthRequest request) {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody AuthRequest request) {
         return ResponseEntity.ok(authService.authenticate(request));
     }
 }
