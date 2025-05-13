@@ -17,6 +17,5 @@ public class BookingResponseDTO {
     private String customerName;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-
     private UserResponseDTO user;
 }
