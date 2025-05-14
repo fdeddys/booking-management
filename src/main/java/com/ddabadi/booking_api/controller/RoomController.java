@@ -20,10 +20,14 @@ public class RoomController {
         this.roomService = roomService;
     }
 
-    @PostMapping("/filter")
-    public ResponseEntity<Object> filterBookings(@RequestBody RoomRequestDto request) {
+    @PostMapping("/filter/page/{page}/count/{count}")
+    public ResponseEntity<Object> filterBookings(
+            @RequestBody RoomRequestDto request,
+            @PathVariable int page,
+            @PathVariable int count
+    ) {
         log.info("ROOM Filter : {} ", request);
-        return ResponseEntity.ok(roomService.findByName(request));
+        return ResponseEntity.ok(roomService.findByName(request, page, count));
     }
 
     @GetMapping("/{id}")

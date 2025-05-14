@@ -8,8 +8,6 @@ public class RoomRequestDto {
     private String desc;
     private String name;
     private Status status;
-    private int page;
-    private int size;
     private Boolean isActive;
 
     public RoomRequestDto() {

@@ -32,12 +32,12 @@ public class RoomService {
         this.userRepository = userRepository;
     }
 
-    public Page<Room> findByName(RoomRequestDto request) {
+    public Page<Room> findByName(RoomRequestDto request, int page, int count) {
 
-        log.info("request : {}, page : {} ",request.getName(), request.getPage());
+        log.info("request : {}, page : {} ",request.getName(), page);
         String nameKriteria = generateRequest(request.getName());
         Sort sort = generateSort("name", "description", "username" );
-        Pageable pageable = PageRequest.of(request.getPage()-1, request.getSize(), sort);
+        Pageable pageable = PageRequest.of(page-1, count, sort);
         return roomRepository
                 .findByNameIgnoreCaseLikeAndStatusAndIsActive(
                         nameKriteria,
