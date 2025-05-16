@@ -20,6 +20,12 @@ public interface RoomRepository extends JpaRepository<Room, Integer>, JpaSpecifi
             Pageable pageable
     );
 
+    Page<Room> findByNameIgnoreCaseLike(
+            String name,
+            Pageable pageable
+    );
+
+
     Optional<Room> findByNameIgnoreCase(String name);
 
 }

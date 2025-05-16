@@ -39,12 +39,12 @@ public class RoomService {
         Sort sort = generateSort("name", "description", "username" );
         Pageable pageable = PageRequest.of(page-1, count, sort);
         return roomRepository
-                .findByNameIgnoreCaseLikeAndStatusAndIsActive(
+                .findByNameIgnoreCaseLike(
                         nameKriteria,
-                        request.getStatus(),
-                        request.getIsActive(),
                         pageable
                 );
+
+
     }
 
     Sort generateSort (String...  args){
@@ -144,15 +144,18 @@ public class RoomService {
                     null
             );
         }
-        Optional<Room> validateNewRoom = roomRepository.findByNameIgnoreCase(room.getName());
-        if (validateNewRoom.isPresent()) {
-            log.info("Room name already exist : {}", room.getName());
-            return generateResponse(
-                    ROOM.CODE_ROOM_NAME_EXIST,
-                    ROOM.CODE_ROOM_NAME_EXIST_MESSAGE,
-                    null
-            );
+        if (!room.getName().equals(optionalRoom.get().getName())) {
+            Optional<Room> validateNewRoom = roomRepository.findByNameIgnoreCase(room.getName());
+            if (validateNewRoom.isPresent()) {
+                log.info("Room name already exist : {}", room.getName());
+                return generateResponse(
+                        ROOM.CODE_ROOM_NAME_EXIST,
+                        ROOM.CODE_ROOM_NAME_EXIST_MESSAGE,
+                        null
+                );
+            }
         }
+
 
         Room updateRoom = optionalRoom.get();
         try {
@@ -160,6 +163,7 @@ public class RoomService {
             updateRoom.setName(room.getName());
             updateRoom.setUpdated(LocalDateTime.now());
             updateRoom.setUsername(optionalUser.get().getUsername());
+            updateRoom.setStatus(room.getStatus());
             roomRepository.save(updateRoom);
             log.info("Room success save : {}", room.toString());
         } catch (Exception exception) {
