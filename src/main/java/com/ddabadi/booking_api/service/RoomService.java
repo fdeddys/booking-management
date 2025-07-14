@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static com.ddabadi.booking_api.constant.ErrorCodeConstant.*;
@@ -26,17 +27,19 @@ public class RoomService {
 
     private final RoomRepository roomRepository;
     private final UserRepository userRepository;
+    private final UtilService utilService;
 
-    public RoomService(RoomRepository roomRepository, UserRepository userRepository) {
+    public RoomService(RoomRepository roomRepository, UserRepository userRepository, UtilService utilService) {
         this.roomRepository = roomRepository;
         this.userRepository = userRepository;
+        this.utilService = utilService;
     }
 
     public Page<Room> findByName(RoomRequestDto request, int page, int count) {
 
         log.info("request : {}, page : {} ",request.getName(), page);
         String nameKriteria = generateRequest(request.getName());
-        Sort sort = generateSort("name", "description", "username" );
+        Sort sort = utilService.generateSort("name", "description", "username" );
         Pageable pageable = PageRequest.of(page-1, count, sort);
         return roomRepository
                 .findByNameIgnoreCaseLike(
@@ -47,17 +50,6 @@ public class RoomService {
 
     }
 
-    Sort generateSort (String...  args){
-        Sort sort = Sort.by(Sort.Order.asc(args[0]));
-        if (args.length >1) {
-            for (int i = 1; i<args.length; i++) {
-                sort = sort.and(Sort.by(args[i]).ascending());
-            }
-        }
-        log.info("Sort : {}", sort);
-        return sort;
-    }
-
     String generateRequest(String kriteria) {
         StringBuilder result = new StringBuilder("%");
         if (kriteria.equals("")){
@@ -66,10 +58,17 @@ public class RoomService {
         return result.append(kriteria).append("%").toString();
     }
 
-    public Room getRoomById(Integer id) {
-        return roomRepository
+    public Optional<Room> getRoomById(Integer id) {
+        return Optional.of(
+                roomRepository
                 .findById(id)
-                .orElse(new Room());
+                .orElse(new Room()));
+    }
+
+    public Optional<List<Room>> getAllRoom() {
+        return Optional.of(roomRepository
+                .findAll()
+        );
     }
 
     public ResponseWithContentDTO createRoom(Room room, String username) {

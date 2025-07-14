@@ -30,7 +30,7 @@ public class RoomController {
         return ResponseEntity.ok(roomService.findByName(request, page, count));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Object> getById(@PathVariable Integer id) {
         return ResponseEntity.ok(roomService.getRoomById(id));
     }
@@ -50,4 +50,10 @@ public class RoomController {
         log.info("Update Room: token valid");
         return roomService.updateRoom(room, username);
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<Object> getAll() {
+        return ResponseEntity.ok(roomService.getAllRoom());
+    }
+
 }

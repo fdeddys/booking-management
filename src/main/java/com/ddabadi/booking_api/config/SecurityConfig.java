@@ -45,7 +45,7 @@ public class SecurityConfig {
                                 "/swagger-ui/**",           // <- Swagger UI resources
                                 "/swagger-ui.html",         // <- Swagger UI HTML
                                 "/webjars/**",              // <- Swagger webjars
-                                "/api/**",
+//                                "/api/**",
                                 "/swagger-resources/**" )
                         .permitAll()
                         .anyRequest().authenticated()
@@ -85,4 +85,6 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration); // Apply to all paths
         return source;
     }
+
+
 }

@@ -7,4 +7,6 @@ import lombok.Data;
 public class ResponseWithContentDTO extends ResponseNoContent {
 
     private Object object;
+    private String errorCode;
+    private String errorDescription;
 }

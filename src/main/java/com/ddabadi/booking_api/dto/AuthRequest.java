@@ -1,12 +1,20 @@
 package com.ddabadi.booking_api.dto;
 
 import lombok.Data;
-import lombok.Getter;
 
 @Data
 public class AuthRequest {
     private String username;
-    private String password;
+    private String encryptedPassword;
+    private String sessionToken;
+
+    public String getSessionToken() {
+        return sessionToken;
+    }
+
+    public void setSessionToken(String sessionToken) {
+        this.sessionToken = sessionToken;
+    }
 
     public String getUsername() {
         return username;
@@ -16,11 +24,11 @@ public class AuthRequest {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getEncryptedPassword() {
+        return encryptedPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setEncryptedPassword(String encryptedPassword) {
+        this.encryptedPassword = encryptedPassword;
     }
 }

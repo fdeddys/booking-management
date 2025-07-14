@@ -13,6 +13,9 @@ public class ErrorCodeConstant {
     public interface USER {
         public static String CODE_USER_NOT_FOUND = "0100";
         public static String CODE_USER_NOT_FOUND_MESSAGE = "User not found";
+
+        public static String CODE_USER_ALREADY_EXIST = "0110";
+        public static String CODE_USER_ALREADY_EXIST_MESSAGE = "Username already exist";
     }
 
 
@@ -22,5 +25,12 @@ public class ErrorCodeConstant {
 
         public static String CODE_ROOM_ID_NOT_EXIST = "0210";
         public static String CODE_ROOM_ID_NOT_EXIST_MESSAGE = "Room ID not exist";
+    }
+
+    public interface BOOKING {
+        public static String CODE_FAILED_VALIDATION = "0300";
+
+        public static String CODE_BOOKING_ID_NOT_EXIST = "0310";
+        public static String CODE_BOOKING_ID_NOT_EXIST_MESSAGE = "Book ID not exist";
     }
 }
